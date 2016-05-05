@@ -1175,6 +1175,9 @@ static inline BOOL checkForOpenDatabaseFatal(BOOL fatal)
                 NSString *fieldName = [columnsRS stringForColumnIndex:1];
                 if ([ignoredFieldNames containsObject:fieldName]) continue;
                 
+                if ([fieldName isEqualToString:@"description"]) {
+                    fieldName = @"desc";
+                }
                 objc_property_t property = class_getProperty(tableModelClass, fieldName.UTF8String);
                 if (! property) {
                     NSLog(@"[FCModel] ignoring column %@.%@, no matching model property", tableName, fieldName);
