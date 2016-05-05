@@ -1162,7 +1162,7 @@ static inline BOOL checkForOpenDatabaseFatal(BOOL fatal)
        ];
         while ([tablesRS next]) {
             NSString *tableName = [tablesRS stringForColumnIndex:0];
-            Class tableModelClass = NSClassFromString(tableName);
+            Class tableModelClass = NSClassFromString(tableName.capitalizedString);
             if (! tableModelClass || ! [tableModelClass isSubclassOfClass:self]) continue;
             
             NSString *primaryKeyName = nil;
