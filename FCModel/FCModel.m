@@ -711,9 +711,15 @@ static inline BOOL checkForOpenDatabaseFatal(BOOL fatal)
         deleted = NO;
         
         [g_fieldInfo[self.class] enumerateKeysAndObjectsUsingBlock:^(NSString *key, id obj, BOOL *stop) {
-            FCModelFieldInfo *info = (FCModelFieldInfo *)obj;
             
-            id suppliedValue = fieldValues[key];
+            NSString *dbKey;
+            if ([key isEqualToString:@"desc"]) {
+                dbKey = @"description";
+            } else {
+                dbKey = key;
+            }
+            FCModelFieldInfo *info = (FCModelFieldInfo *)obj;
+            id suppliedValue = fieldValues[dbKey];
             if (suppliedValue) {
                 [self decodeFieldValue:suppliedValue intoPropertyName:key];
             } else {
