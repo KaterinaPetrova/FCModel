@@ -15,6 +15,11 @@
 #import <sqlite3.h>
 #import <Security/Security.h>
 
+#if DEBUG
+#else
+#define NSLog(args...)
+#endif
+
 NSString * const FCModelInsertNotification = @"FCModelInsertNotification";
 NSString * const FCModelUpdateNotification = @"FCModelUpdateNotification";
 NSString * const FCModelDeleteNotification = @"FCModelDeleteNotification";
