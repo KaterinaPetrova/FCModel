@@ -662,7 +662,7 @@ static inline BOOL checkForOpenDatabaseFatal(BOOL fatal)
 
 + (void)queryFailedInDatabase:(FMDatabase *)db
 {
-    [[NSException exceptionWithName:@"FCModelSQLiteException" reason:db.lastErrorMessage userInfo:nil] raise];
+    NSLog(@"[FCModel] Error %@:", db.lastErrorMessage);
 }
 
 #pragma mark - Attributes and CRUD
@@ -1101,7 +1101,10 @@ static inline BOOL checkForOpenDatabaseFatal(BOOL fatal)
 + (NSString *)expandQuery:(NSString *)query
 {
     if (self == FCModel.class) return query;
-    query = [query stringByReplacingOccurrencesOfString:@"$PK" withString:g_primaryKeyFieldName[self]];
+    NSString *pk = g_primaryKeyFieldName[self];
+    if (pk) {
+        query = [query stringByReplacingOccurrencesOfString:@"$PK" withString:g_primaryKeyFieldName[self]];
+    }
     return [query stringByReplacingOccurrencesOfString:@"$T" withString:NSStringFromClass(self)];
 }
 
